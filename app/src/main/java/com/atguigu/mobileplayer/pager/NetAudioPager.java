@@ -31,7 +31,7 @@ public class NetAudioPager extends BasePager {
         //设置居中
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(Color.RED);//字体红色
-        return null;
+        return textView;
     }
     @Override
     public void initData(){

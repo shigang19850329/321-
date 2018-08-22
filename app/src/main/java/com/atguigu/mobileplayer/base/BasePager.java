@@ -17,8 +17,8 @@ public abstract class BasePager {
      * @param context
      */
     public final Context context;
-    private View rootView;
-
+    public  View rootView;
+    public boolean isInitData ;
     public BasePager(Context context) {
         this.context = context;
         rootView = initView();

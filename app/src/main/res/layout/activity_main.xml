@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
     <!--标题栏-->
-
+  <include layout="@layout/titlebar"/>
     <!--FrameLayout-->
     <FrameLayout
         android:id="@+id/f1_main_content"
