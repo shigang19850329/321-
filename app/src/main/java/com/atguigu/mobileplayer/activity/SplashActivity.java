@@ -47,9 +47,9 @@ private static String TAG = SplashActivity.class.getSimpleName();
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //如果这个参数是null，所有的消息都会被移除，
         //现在点击进入MainActivity再退出，就不会再打开MainActivity了
         handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }
