@@ -1,9 +1,11 @@
 package com.atguigu.mobileplayer.domain;
 
+import java.io.Serializable;
+
 /**
  * 代表一个视频或者音频
  */
-public class MediaItem {
+public class MediaItem implements Serializable{
     private String name;
     private long duration;
     private long size;

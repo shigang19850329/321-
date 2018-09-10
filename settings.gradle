@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':StartAllPlayer', ':VitamioRecorderSampleFor', ':vitamio-sample', ':vitamio'

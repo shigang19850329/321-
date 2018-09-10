@@ -40,7 +40,8 @@ private static String TAG = SplashActivity.class.getSimpleName();
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.e(TAG,"onTouchEvent==Action"+event.getAction());
+        //Log.e(TAG,"onTouchEvent==Action"+event.getAction());
+
         startMainActivity();
         return super.onTouchEvent(event);
     }

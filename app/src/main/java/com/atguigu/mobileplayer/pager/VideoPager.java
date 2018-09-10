@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -48,6 +49,8 @@ public class VideoPager extends BasePager {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (mediaItems!=null&&mediaItems.size()>0){
+                //有同学这样写，会导致无数据显示。
+                //mediaItems = new ArrayList<>();//覆盖了，下拉刷新。
                 //有数据，设置适配器，把文本隐藏
                 videoPageradapter = new VideoPagerAdapter(context,mediaItems,true);
                 list_view.setAdapter(videoPageradapter);
@@ -87,9 +90,18 @@ public class VideoPager extends BasePager {
 //         //Video/*表示所有格式的视频,调取所有播放视频的播放器
 //         intent.setDataAndType(Uri.parse(mediaItem.getData()),"video/*");
 //         context.startActivity(intent);
-         //2.调用自己写的播放器,显示意图
+         //2.调用自己写的播放器,显示意图，一个播放地址，
+//         Intent intent = new Intent(context,SystemVideoPlayer.class);
+//         intent.setDataAndType(Uri.parse(mediaItem.getData()),"video/*");
+//         context.startActivity(intent);
+         //3.要传递列表数据-对象-序列化
          Intent intent = new Intent(context,SystemVideoPlayer.class);
-         intent.setDataAndType(Uri.parse(mediaItem.getData()),"video/*");
+         Bundle bundle = new Bundle();
+         //不序列化肯定崩溃
+         bundle.putSerializable("videolist",mediaItems);
+         intent.putExtras(bundle);
+         //传一个位置进去，不然不知道点那个
+         intent.putExtra("position",position);
          context.startActivity(intent);
      }
  }
@@ -114,6 +126,9 @@ public class VideoPager extends BasePager {
             @Override
             public void run() {
                 super.run();
+                //将上下文转化成Activity
+                isGrantExternalRW((Activity) context);
+                //SystemClock.sleep(2000);
                 mediaItems = new ArrayList<MediaItem>();
                 //根据上下文，得到内容解析者
                 ContentResolver resolver = context.getContentResolver();

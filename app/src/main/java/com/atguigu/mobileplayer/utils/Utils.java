@@ -44,7 +44,6 @@ public class Utils {
         }
     }
 
-
     /**
      * 判断是否是网络的资源
      * @param uri
@@ -52,7 +51,9 @@ public class Utils {
      */
     public boolean isNetUri(String uri) {
         boolean reault = false;
+        //首先判断是否为空
         if (uri != null) {
+            //rtsp 直播的协议格式，
             if (uri.toLowerCase().startsWith("http") || uri.toLowerCase().startsWith("rtsp") || uri.toLowerCase().startsWith("mms")) {
                 reault = true;
             }
@@ -78,6 +79,4 @@ public class Utils {
         netSpeed  = String.valueOf(speed) + " kb/s";
         return  netSpeed;
     }
-
-
 }

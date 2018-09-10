@@ -1,4 +1,4 @@
 <resources>
-    <string name="MobilePlayer">MobilePlayer</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="app_name">手机影音</string>
+    <string name="player_name">321播放器</string>
 </resources>
