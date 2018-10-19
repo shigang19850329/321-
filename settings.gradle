@@ -1,1 +1,4 @@
-include ':app', ':StartAllPlayer', ':VitamioRecorderSampleFor', ':vitamio-sample', ':vitamio'
+include ':app', ':StartAllPlayer', ':VitamioRecorderSampleFor', ':vitamio-sample', ':vitamio', ':notificationtext', 'xutils', ':AgoraDemo', ':SurfaceViewDemo', ':binderService', ':EventBus', ':EventBus3.0_Sample'
+include ':library'
+include ':xUtils3_sample'
+include ':xListView'

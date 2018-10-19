@@ -49,20 +49,20 @@ public class VideoPager extends BasePager {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (mediaItems!=null&&mediaItems.size()>0){
-                //有同学这样写，会导致无数据显示。
-                //mediaItems = new ArrayList<>();//覆盖了，下拉刷新。
-                //有数据，设置适配器，把文本隐藏
-                videoPageradapter = new VideoPagerAdapter(context,mediaItems,true);
-                list_view.setAdapter(videoPageradapter);
-                //文本隐藏
-                tv_no_media.setVisibility(View.GONE);
-            }else{
-                //没有数据，文本显示，
-                tv_no_media.setVisibility(View.VISIBLE);
-            }
-         //把progressBar隐藏
-            pb_loading.setVisibility(View.GONE);
+            //有同学这样写，会导致无数据显示。
+            //mediaItems = new ArrayList<>();//覆盖了，下拉刷新。
+            //有数据，设置适配器，把文本隐藏
+            videoPageradapter = new VideoPagerAdapter(context,mediaItems,true);
+            list_view.setAdapter(videoPageradapter);
+            //文本隐藏
+            tv_no_media.setVisibility(View.GONE);
+        }else{
+            //没有数据，文本显示，
+            tv_no_media.setVisibility(View.VISIBLE);
         }
+        //把progressBar隐藏
+            pb_loading.setVisibility(View.GONE);
+    }
     };
     public VideoPager(Context context) {
         super(context);

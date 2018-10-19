@@ -1,8 +1,10 @@
 package com.atguigu.mobileplayer.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -178,7 +180,8 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
             isMute = !isMute;//一点叫他取反
             updateVolume(currentVolume,isMute);
         } else if (v == btnSwitchPlayer) {
-            // Handle clicks for btnSwitchPlayer
+            // 切换万能播放器
+           showSwitchPlayerDialog();
         } else if (v == btnExit) {
             // Handle clicks for btnExit
             finish();//退出
@@ -198,6 +201,21 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
 
         handler.removeMessages(HIDE_MEDIACONTROLLER);
         handler.sendEmptyMessageDelayed(HIDE_MEDIACONTROLLER, 4000);
+    }
+    private void showSwitchPlayerDialog() {
+        //出错以后弹出一个对话框，点确定退出activity
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("系统播放器提醒您");
+        builder.setMessage("当您播放视频，有声音没有画面的时候，请切换万能播放器播放");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startVitamioPlayer();
+            }
+        });
+        //点取消什么都不做，继续播放呗。
+        builder.setNegativeButton("取消",null);
+        builder.show();
     }
 
     private void startAndPause() {
@@ -395,7 +413,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
      *
      * @return
      */
-    private String getSystemTime() {
+    public String getSystemTime() {
         java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("HH:mm:ss");
         return format.format(new Date());
         //每循环一次new一个date对象，没有类引用它过一会会释放。
@@ -726,8 +744,33 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
             //Toast.makeText(SystemVideoPlayer.this, "播放出错了哦", Toast.LENGTH_SHORT).show();
             //如果返回false，会默认弹出一个对话框，
             //1.播放视频的格式不支持，2.播放网络视频的时候，网络中断，3.播放的视频中间有空白，不完整。
+            startVitamioPlayer();
             return false;
         }
+    }
+
+    /**
+     *把数据原封不动的传过去
+     * 关闭系统播放器
+     */
+    private void startVitamioPlayer() {
+        //如果不为空，让它停止播放
+        if (videoView!=null){
+            videoView.stopPlayback();
+        }
+        Intent intent = new Intent(this,VitamioVideoPlayer.class);
+         if (mediaItems!=null&&mediaItems.size()>0){
+             Bundle bundle = new Bundle();
+             bundle.putSerializable("videolist",mediaItems);
+             intent.putExtras(bundle);
+             intent.putExtra("position",position);
+
+         }else if (uri!=null){
+             intent.setData(uri);
+         }
+        startActivity(intent);
+        //关闭这个页面
+        finish();
     }
 
     class MyOnCompletionListener implements MediaPlayer.OnCompletionListener {
@@ -745,6 +788,8 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
 
     @Override
     protected void onDestroy() {
+        //移除所有消息
+        handler.removeCallbacksAndMessages(null);
         //释放资源的时候，先释放子类，再释放父类。
         //注销receiver
         if (receiver != null)

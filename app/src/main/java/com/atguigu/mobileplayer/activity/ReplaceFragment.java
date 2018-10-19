@@ -18,7 +18,12 @@ import com.atguigu.mobileplayer.base.BasePager;
  */
 public class ReplaceFragment extends Fragment {
     private BasePager currPager;
-
+    public ReplaceFragment(){}
+    public static ReplaceFragment getInstance(BasePager currPager){
+            ReplaceFragment replaceFragment = new ReplaceFragment();
+           replaceFragment.currPager = currPager;
+        return replaceFragment;
+    }
     public ReplaceFragment(BasePager currPager) {
         this.currPager = currPager;
     }

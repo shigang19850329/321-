@@ -73,6 +73,11 @@ public class VideoPagerAdapter extends BaseAdapter {
         viewHolder.tv_size.setText(Formatter.formatFileSize(context,mediaItem.getSize()));
         //时间也需要转换，用Util这个工具
         viewHolder.tv_time.setText(utils.stringForTime((int)mediaItem.getDuration()));
+
+        if (!isVideo){
+            //音频
+            viewHolder.iv_icon.setImageResource(R.drawable.music_default_bg);
+        }
         return convertView;
     }
     static class ViewHolder{
