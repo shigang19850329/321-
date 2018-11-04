@@ -154,7 +154,7 @@ public class ShowLyricView extends TextView{
             }
             //绘制后面部分
             tempY = height/2;//Y轴中间坐标
-            for (int i = index+1; i <=lyrics.size(); i++) {
+            for (int i = index+1; i <lyrics.size(); i++) {//数组下标越界<=
                 //得到每一句歌词
                 String nextContent = lyrics.get(i).getContent();
 

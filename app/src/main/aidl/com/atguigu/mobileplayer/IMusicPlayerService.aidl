@@ -71,4 +71,6 @@ interface IMusicPlayerService {
         //拖动音频进度
         void seekTo(int position);
 
+        int getAudioSessionId();
+
 }
